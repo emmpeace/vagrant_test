@@ -1,19 +1,23 @@
+# $script = <<-SCRIPT
+# echo installing ansible
+# sudo apt update
+# sudo apt install software-properties-common -y
+# sudo add-apt-repository --yes --update ppa:ansible/ansible
+# echo installing ansible
+# sudo apt install ansible -y
+
+# wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+# echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+# echo installing vagrant
+# sudo apt install vagrant -y
+
+# echo installing kvm stuffs
+# sudo apt -y install bridge-utils cpu-checker libvirt-clients libvirt-daemon qemu qemu-kvm virt-manager
+
+# SCRIPT
+
 $script = <<-SCRIPT
-echo installing ansible
-sudo apt update
-sudo apt install software-properties-common -y
-sudo add-apt-repository --yes --update ppa:ansible/ansible
-echo installing ansible
-sudo apt install ansible -y
-
-wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-echo installing vagrant
-sudo apt install vagrant -y
-
-echo installing kvm stuffs
-sudo apt -y install bridge-utils cpu-checker libvirt-clients libvirt-daemon qemu qemu-kvm virt-manager
-
+echo ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDojM8p4YlSDt6+P22DDisZwmU3x2Y8bGHzFL+Daprbm >> /home/vagrant/.ssh/authorizedkeys
 SCRIPT
 
 Vagrant.configure("2") do |config|
@@ -25,15 +29,26 @@ Vagrant.configure("2") do |config|
     ubuntu.vm.network "private_network", ip: "192.168.50.101"
 #    ubuntu.vm.network "private_network", type: "dhcp"
     config.vm.provider "virtualbox" do |v|
-      v.memory = 8192
+      v.memory = 2048
       v.cpus = 2
     end
-
     ubuntu.vm.provision "shell", inline: $script
 
+
+#    ubuntu.vm.provision "shell", inline: $script
 #    ubuntu.vm.provision "shell", inline: "apt update && apt upgrade -y"
   end
 
+  config.vm.define "ubuntu2" do |ubuntu|
+    ubuntu.vm.box = "ubuntu/jammy64"
+    ubuntu.vm.hostname = "vub02"
+    ubuntu.vm.network "private_network", ip: "192.168.50.102"
+    config.vm.provider "virtualbox" do |v|
+      v.memory = 2048
+      v.cpus = 2
+    end
+    ubuntu.vm.provision "shell", inline: $script
+  end
   # config.vm.define "centos" do |centos|
   #   centos.vm.box = "centos/stream8"
   #   centos.vm.hostname = "vce01"

@@ -1,0 +1,12 @@
+svr1:
+  hosts:
+    192.168.50.101
+
+svr2:
+  hosts:
+    192.168.50.102
+
+dev:
+  children:
+    svr1:
+    svr2:

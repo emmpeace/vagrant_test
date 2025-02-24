@@ -1,6 +1,7 @@
 ---
 - name: test
-  hosts: all
+  hosts: 
+    - dev
   gather_facts: true
   become: true
   handlers:
@@ -16,6 +17,7 @@
       password: "{{ 'Password1' | password_hash('sha512') }}"
       update_password: on_create
       shell: /bin/bash
+
   - name: Edit SSHD Config
     lineinfile:
       path: /etc/ssh/sshd_config
@@ -23,8 +25,18 @@
       insertafter: '#PasswordAuthentication'
       line: 'PasswordAuthentication yes'
     notify: restart_sshd
+
   - name: Add sudo rights for tux
     copy:
       dest: /etc/sudoers.d/tux
       content: "tux ALL=(root) NOPASSWD: ALL"
       backup: true
+
+  - name: try to create a vm with qemu
+    community.libvirt.virt:
+      command: define
+      xml: "{{ lookup('template', 'vm_template.xml.j2') }}"
+      autostart: true
+
+
+
