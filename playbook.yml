@@ -1,7 +1,7 @@
 ---
 - name: test
   hosts: 
-    - dev
+    - ans_svr
   gather_facts: true
   become: true
   handlers:
@@ -32,11 +32,11 @@
       content: "tux ALL=(root) NOPASSWD: ALL"
       backup: true
 
-  - name: try to create a vm with qemu
-    community.libvirt.virt:
-      command: define
-      xml: "{{ lookup('template', 'vm_template.xml.j2') }}"
-      autostart: true
+  # - name: try to create a vm with qemu
+  #   community.libvirt.virt:
+  #     command: define
+  #     xml: "{{ lookup('template', 'vm_template.xml.j2') }}"
+  #     autostart: true
 
 
 

@@ -6,7 +6,17 @@ svr2:
   hosts:
     192.168.50.102
 
-dev:
+svr3:
+  hosts:
+    192.168.50.103
+
+ans_svr:
+  children:
+    svr2:
+    svr3:
+
+all:
   children:
     svr1:
     svr2:
+    svr3:
