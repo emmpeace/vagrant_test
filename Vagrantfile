@@ -34,8 +34,6 @@ Vagrant.configure("2") do |config|
     end
     ubuntu.vm.provision "shell", inline: $script
 
-
-#    ubuntu.vm.provision "shell", inline: $script
 #    ubuntu.vm.provision "shell", inline: "apt update && apt upgrade -y"
   end
 
@@ -49,6 +47,18 @@ Vagrant.configure("2") do |config|
     end
     ubuntu.vm.provision "shell", inline: $script
   end
+
+    config.vm.define "ubuntu3" do |ubuntu|
+    ubuntu.vm.box = "ubuntu/jammy64"
+    ubuntu.vm.hostname = "vub03"
+    ubuntu.vm.network "private_network", ip: "192.168.50.103"
+    config.vm.provider "virtualbox" do |v|
+      v.memory = 2048
+      v.cpus = 2
+    end
+    ubuntu.vm.provision "shell", inline: $script
+  end
+
   # config.vm.define "centos" do |centos|
   #   centos.vm.box = "centos/stream8"
   #   centos.vm.hostname = "vce01"
