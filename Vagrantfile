@@ -37,26 +37,26 @@ Vagrant.configure("2") do |config|
 #    ubuntu.vm.provision "shell", inline: "apt update && apt upgrade -y"
   end
 
-  config.vm.define "ubuntu2" do |ubuntu|
-    ubuntu.vm.box = "ubuntu/jammy64"
-    ubuntu.vm.hostname = "vub02"
-    ubuntu.vm.network "private_network", ip: "192.168.50.102"
+  config.vm.define "ubuntu2" do |ubuntu2|
+    ubuntu2.vm.box = "ubuntu/jammy64"
+    ubuntu2.vm.hostname = "vub02"
+    ubuntu2.vm.network "private_network", ip: "192.168.50.102"
     config.vm.provider "virtualbox" do |v|
       v.memory = 2048
       v.cpus = 2
     end
-    ubuntu.vm.provision "shell", inline: $script
+    ubuntu2.vm.provision "shell", inline: $script
   end
 
-    config.vm.define "ubuntu3" do |ubuntu|
-    ubuntu.vm.box = "ubuntu/jammy64"
-    ubuntu.vm.hostname = "vub03"
-    ubuntu.vm.network "private_network", ip: "192.168.50.103"
+  config.vm.define "ubuntu3" do |ubuntu3|
+    ubuntu3.vm.box = "ubuntu/jammy64"
+    ubuntu3.vm.hostname = "vub03"
+    ubuntu3.vm.network "private_network", ip: "192.168.50.103"
     config.vm.provider "virtualbox" do |v|
       v.memory = 2048
       v.cpus = 2
     end
-    ubuntu.vm.provision "shell", inline: $script
+    ubuntu3.vm.provision "shell", inline: $script
   end
 
   # config.vm.define "centos" do |centos|
