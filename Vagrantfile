@@ -4,12 +4,14 @@ echo "${ans_k}" >> /home/vagrant/.ssh/authorized_keys
 SCRIPT
 
 $script2 = <<-SCRIPT
-echo apt preparations for ansible
+echo preparations for ansible
+cp /vagrant/ans_key /home/vagrant/.ssh/id_ed25519
+chmod 400 /home/vagrant/.ssh/id_ed25519
 sudo apt update
 sudo apt install software-properties-common -y
 sudo add-apt-repository --yes --update ppa:ansible/ansible
 echo installing ansible
-sudo apt install ansible -y
+sudo apt install ansible python3-pip python3-passlib -y
 SCRIPT
 
 Vagrant.configure("2") do |config|

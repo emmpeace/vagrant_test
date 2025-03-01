@@ -26,4 +26,5 @@ create your ownkey please security
 notes:
 Sometimes it hangs on "ubuntu: SSH auth method: private key"
 
-next step: i need to create an ssh config for the ansible controller
+next step: 
+this mgiht be ok test vagrant provider again
