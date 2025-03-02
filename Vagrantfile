@@ -7,6 +7,7 @@ $script2 = <<-SCRIPT
 echo preparations for ansible
 cp /vagrant/ans_key /home/vagrant/.ssh/id_ed25519
 chmod 400 /home/vagrant/.ssh/id_ed25519
+chown vagrant:vagrant /home/vagrant/.ssh/id_ed25519
 sudo apt update
 sudo apt install software-properties-common -y
 sudo add-apt-repository --yes --update ppa:ansible/ansible
@@ -27,7 +28,7 @@ Vagrant.configure("2") do |config|
       v.cpus = 2
     end
     ubuntu.vm.provision "shell", inline: $script
-#    ubuntu.vm.provision "shell", inline: $script2
+    ubuntu.vm.provision "shell", inline: $script2
 
 #    ubuntu.vm.provision "shell", inline: "apt update && apt upgrade -y"
   end

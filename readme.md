@@ -3,8 +3,8 @@ The goal: automate making VM (vagrant) and provisioning (ansible)
 
 tools:
 - Windows 10, 11
-- virtual box
-- vagrant
+- virtual box 7.0
+- vagrant 2.4.3
 
 VMs:
 - Ansible controller
@@ -17,8 +17,8 @@ Commands:
 ssh-keygen -f ans_key
 vagrant up
 vagrant ssh ubuntu
-
-ansible-playbook -i inventory/ playbook.yml
+cd /vagrant
+ansible-playbook -i inventory/all.yaml playbook.yml
 ```
 create your ownkey please security
 
@@ -27,4 +27,4 @@ notes:
 Sometimes it hangs on "ubuntu: SSH auth method: private key"
 
 next step: 
-this mgiht be ok test vagrant provider again
+test vagrant up parallel
